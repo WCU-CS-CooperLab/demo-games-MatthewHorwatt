@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3 uid="uid://lrgpjpnpxsa5"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_trqrt"]
+[ext_resource type="Texture2D" uid="uid://ualrhdgl40w0" path="res://assets/styled_sky.png" id="2_4qe07"]
+[ext_resource type="PackedScene" uid="uid://t0hjlem2jgaw" path="res://plane.tscn" id="3_jvtwe"]
+[ext_resource type="PackedScene" uid="uid://42m4ugywb2u1" path="res://chunk.tscn" id="4_n5hp1"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="5_ryaxj"]
+[ext_resource type="PackedScene" uid="uid://d35h73xyeqvkf" path="res://ui.tscn" id="6_yfkwy"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_amdfa"]
+panorama = ExtResource("2_4qe07")
+
+[sub_resource type="Sky" id="Sky_amvvg"]
+sky_material = SubResource("PanoramaSkyMaterial_amdfa")
+
+[sub_resource type="Environment" id="Environment_fedmy"]
+background_mode = 2
+sky = SubResource("Sky_amvvg")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_trqrt")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fedmy")
+
+[node name="Plane" parent="." instance=ExtResource("3_jvtwe")]
+
+[node name="Chunk" parent="." instance=ExtResource("4_n5hp1")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+script = ExtResource("5_ryaxj")
+target_path = NodePath("../Plane")
+offset = Vector3(7, 7, 15)
+
+[node name="UI" parent="." instance=ExtResource("6_yfkwy")]
+
+[connection signal="dead" from="Plane" to="." method="_on_plane_dead"]
+[connection signal="fuel_changed" from="Plane" to="UI" method="update_fuel"]
+[connection signal="score_changed" from="Plane" to="UI" method="update_score"]

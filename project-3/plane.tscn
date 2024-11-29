@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://t0hjlem2jgaw"]
+
+[ext_resource type="Script" path="res://plane.gd" id="1_4oy01"]
+[ext_resource type="PackedScene" uid="uid://duhclhkwilhac" path="res://assets/cartoon_plane.glb" id="1_erpw4"]
+[ext_resource type="Texture2D" uid="uid://bcxcs84u4yuwl" path="res://assets/smoke/smoke_05.png" id="3_16mdy"]
+[ext_resource type="Texture2D" uid="uid://bxo4p8s3nvmsb" path="res://assets/smoke/smoke_01.png" id="4_akt0p"]
+[ext_resource type="Texture2D" uid="uid://bc874axx7v0yr" path="res://assets/smoke/smoke_04.png" id="5_wfkff"]
+[ext_resource type="Texture2D" uid="uid://bf8vmnhjd7ili" path="res://assets/smoke/smoke_02.png" id="6_nh4nr"]
+[ext_resource type="Texture2D" uid="uid://bgiyg6ophcitv" path="res://assets/smoke/smoke_03.png" id="7_mlamd"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ijnor"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igut8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qbu6i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_16mdy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_akt0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_wfkff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nh4nr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_mlamd")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Plane" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+collision_layer = 2
+script = ExtResource("1_4oy01")
+
+[node name="cartoon_plane" parent="." instance=ExtResource("1_erpw4")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="AnimationPlayer" parent="cartoon_plane" index="6"]
+autoplay = "prop_spin"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_ijnor")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_igut8")
+
+[node name="Explosion" type="AnimatedSprite3D" parent="."]
+visible = false
+pixel_size = 0.5
+billboard = 1
+shaded = true
+sprite_frames = SubResource("SpriteFrames_qbu6i")
+frame = 3
+frame_progress = 0.0717582
+
+[editable path="cartoon_plane"]

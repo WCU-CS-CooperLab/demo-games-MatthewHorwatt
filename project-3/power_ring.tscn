@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dloih3nsymae2"]
+
+[ext_resource type="Script" path="res://power_ring.gd" id="1_ks4av"]
+[ext_resource type="Texture2D" uid="uid://d2kboj2j3dhus" path="res://assets/textures/texture_09.png" id="1_ruws0"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j7ha7"]
+height = 0.5
+radius = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktc5m"]
+shading_mode = 0
+albedo_color = Color(0.13803, 0.631855, 0.741643, 1)
+albedo_texture = ExtResource("1_ruws0")
+
+[sub_resource type="TorusMesh" id="TorusMesh_imjfi"]
+material = SubResource("StandardMaterial3D_ktc5m")
+inner_radius = 3.5
+outer_radius = 4.0
+
+[node name="Area3D" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_ks4av")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, -4.37114e-08, -4.37114e-08, 1.91069e-15, -1, 0, 1, 1.91069e-15, 0, 0, 0)
+shape = SubResource("CylinderShape3D_j7ha7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("TorusMesh_imjfi")
+skeleton = NodePath("../..")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
