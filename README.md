@@ -10,3 +10,4 @@ A template repository to publish games
 7. [Nov 18 Project 2](./Project_2)
 8. [Nov 29 Project 3](./project-3/)
 9. [GameMakersProject2](./ZippedTeamProject/TheGameMakersProject2.zip)
+10. [GameMakerProject2macOS](./TheGameMakersProject2.zip)
